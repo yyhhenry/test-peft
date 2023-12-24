@@ -1,5 +1,6 @@
 from typing import NamedTuple
 import logging
+from torch import Tensor
 from transformers import RobertaForSequenceClassification, RobertaTokenizer
 
 CHECKPOINT = "roberta-base"
@@ -10,7 +11,7 @@ class Roberta(NamedTuple):
     tokenizer: RobertaTokenizer
 
     def tokenize(self, sentence: str):
-        return self.tokenizer.tokenize(
+        return self.tokenizer.encode(
             sentence, return_tensors="pt", truncation=True, max_length=512
         )
 

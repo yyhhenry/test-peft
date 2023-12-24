@@ -29,5 +29,5 @@ class DataRow(NamedTuple):
     label: int
 
     @classmethod
-    def from_dict(cls, d: dict[str, Any]):
+    def from_dict(cls, d: dict[Any, Any]):
         return cls(sentence=d["sentence"], label=d["label"])
