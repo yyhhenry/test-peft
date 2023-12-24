@@ -2,8 +2,10 @@ from tqdm import tqdm
 from transformers.modeling_outputs import SequenceClassifierOutput
 from util.dataset import DataRow, load_sst2
 from util.log import init_logging, print_info
-from util.model import load_roberta
+from util.model import get_peft, load_roberta
 import torch
+
+from util.train import train
 
 init_logging()
 torch.manual_seed(42)
@@ -17,10 +19,7 @@ def readable_test(title: str):
     label_name = {0: "0 Negative", 1: "1 Positive"}
     for index in range(10):
         row = DataRow.from_dict(sst2_dataset.validation[index])
-        token = roberta.tokenize(row.sentence)
-        output = roberta.model(token)
-        assert isinstance(output, SequenceClassifierOutput)
-        output_label = int(output.logits.argmax().item())
+        output_label = roberta.predict(row.sentence)
         print_info(f"Input: {row.sentence}")
         print_info(
             f"Output: {label_name[output_label]} / Answer: {label_name[row.label]} / Correct: {output_label == row.label}"
@@ -34,10 +33,7 @@ def whole_test(title: str):
     correct_count = 0
     for index in tqdm(range(n)):
         row = DataRow.from_dict(sst2_dataset.validation[index])
-        token = roberta.tokenize(row.sentence)
-        output = roberta.model(token)
-        assert isinstance(output, SequenceClassifierOutput)
-        output_label = int(output.logits.argmax().item())
+        output_label = roberta.predict(row.sentence)
         if output_label == row.label:
             correct_count += 1
     print_info(f"Accuracy: {correct_count}/{n} = {correct_count/n}")
@@ -46,3 +42,9 @@ def whole_test(title: str):
 
 readable_test("Before fine-tuning")
 whole_test("Before fine-tuning")
+
+peft = get_peft(roberta)
+train(peft, roberta, sst2_dataset)
+
+readable_test("After fine-tuning")
+whole_test("After fine-tuning")

@@ -9,7 +9,6 @@ dependencies = [
     "setuptools==69.0.2",
     "datasets>=2.16.0",
     "transformers>=4.36.2",
-    "evaluate>=0.4.1",
     "peft>=0.7.1",
     "tqdm>=4.66.1",
 ]

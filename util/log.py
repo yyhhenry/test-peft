@@ -25,6 +25,6 @@ def init_logging():
     logging.info("<Start>")
 
 
-def print_info(msg: str):
+def print_info(msg: object):
     print(f"[INFO] {msg}")
     logging.info(msg)
