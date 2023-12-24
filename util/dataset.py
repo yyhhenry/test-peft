@@ -18,8 +18,8 @@ def load_sst2():
     validation = dataset["validation"]
     assert isinstance(validation, Dataset)
 
-    train = train.select(range(1000))
-    validation = validation.select(range(100))
+    train = train.select(range(6000))
+    validation = validation.select(range(300))
     return Sst2Dataset(train=train, validation=validation)
 
 
