@@ -1,0 +1,26 @@
+[project]
+authors = [
+  {name = "yyhhenry", email = "yyhhenry@foxmail.com"},
+]
+dependencies = [
+    "numpy==1.26.2",
+    "torch==2.1.2",
+    "torchvision==0.16.2",
+    "setuptools==69.0.2",
+    "datasets>=2.16.0",
+]
+description = "Default template for PDM package"
+license = {text = "MIT"}
+name = "test-peft"
+readme = "README.md"
+requires-python = "==3.10.*"
+version = "0.1.0"
+
+[tool.pdm]
+package-type = "application"
+
+[[tool.pdm.source]]
+exclude_packages = ["*"]
+include_packages = ["torch", "torchvision"]
+name = "torch"
+url = "https://download.pytorch.org/whl/cu121"
