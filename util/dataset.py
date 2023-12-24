@@ -6,7 +6,6 @@ from datasets import load_dataset, DatasetDict, Dataset
 class Sst2Dataset(NamedTuple):
     train: Dataset
     validation: Dataset
-    test: Dataset
 
 
 def load_sst2():
@@ -18,10 +17,10 @@ def load_sst2():
     assert isinstance(train, Dataset)
     validation = dataset["validation"]
     assert isinstance(validation, Dataset)
-    test = dataset["test"]
-    assert isinstance(test, Dataset)
 
-    return Sst2Dataset(train=train, validation=validation, test=test)
+    train = train.select(range(1000))
+    validation = validation.select(range(100))
+    return Sst2Dataset(train=train, validation=validation)
 
 
 class DataRow(NamedTuple):
