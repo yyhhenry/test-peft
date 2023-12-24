@@ -9,7 +9,7 @@ id2label = {0: "Negative", 1: "Positive"}
 label2id = {"Negative": 0, "Positive": 1}
 
 
-class RobertaModule(NamedTuple):
+class Roberta(NamedTuple):
     model: RobertaForSequenceClassification
     tokenizer: RobertaTokenizer
 
@@ -25,4 +25,4 @@ def load_roberta():
 
     logging.info(model)
     logging.info(tokenizer)
-    return RobertaModule(model=model, tokenizer=tokenizer)
+    return Roberta(model=model, tokenizer=tokenizer)
