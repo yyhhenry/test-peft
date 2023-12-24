@@ -1,10 +1,10 @@
 import logging
 import os
 
-MAIN_LOG = "tmp/main.log"
+MAIN_LOG = "log/main.log"
 
 
-def init_logging():
+def init_logging(title: str):
     level = os.environ.get("LOG_LEVEL")
     if level is None:
         level = logging.INFO
@@ -22,7 +22,7 @@ def init_logging():
     if append_mode:
         logging.info("")
         logging.info("")
-    logging.info("<Start>")
+    logging.info(f"<Start {title}>")
 
 
 def print_info(msg: object):

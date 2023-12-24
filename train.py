@@ -5,7 +5,7 @@ from util.test import readable_test, whole_test
 from util.train import train
 import torch
 
-init_logging()
+init_logging("train")
 torch.manual_seed(42)
 
 sst2_dataset = load_sst2()

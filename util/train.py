@@ -45,7 +45,7 @@ def train(peft: PeftModel, roberta: Roberta, dataset: Sst2Dataset):
         predictions = Tensor(p.predictions)
         labels = Tensor(p.label_ids)
         predictions = predictions.argmax(dim=1)
-        accuracy = Tensor(predictions - labels).square().mean()
+        accuracy = Tensor(predictions - labels).square().mean().item()
         return {"accuracy": accuracy}
 
     trainer = Trainer(

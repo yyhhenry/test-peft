@@ -1,8 +1,11 @@
 from util.dataset import load_sst2
+from util.log import init_logging
 from util.model import get_peft, load_roberta, predict
 from peft.peft_model import PeftModel
 
 from util.test import readable_test, whole_test
+
+init_logging("test")
 
 sst2_dataset = load_sst2()
 roberta = load_roberta()
