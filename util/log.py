@@ -8,7 +8,7 @@ def init_logging(title: str):
     level = os.environ.get("LOG_LEVEL")
     if level is None:
         level = logging.INFO
-    os.makedirs("tmp", exist_ok=True)
+    os.makedirs("log", exist_ok=True)
 
     append_mode = os.path.isfile(MAIN_LOG)
 
