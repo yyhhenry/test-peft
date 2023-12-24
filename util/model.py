@@ -4,20 +4,19 @@ from transformers import RobertaForSequenceClassification, RobertaTokenizer
 
 CHECKPOINT = "roberta-base"
 
-# define label maps
-id2label = {0: "Negative", 1: "Positive"}
-label2id = {"Negative": 0, "Positive": 1}
-
 
 class Roberta(NamedTuple):
     model: RobertaForSequenceClassification
     tokenizer: RobertaTokenizer
 
+    def tokenize(self, sentence: str):
+        return self.tokenizer.tokenize(
+            sentence, return_tensors="pt", truncation=True, max_length=512
+        )
+
 
 def load_roberta():
-    model = RobertaForSequenceClassification.from_pretrained(
-        CHECKPOINT, num_labels=2, id2label=id2label, label2id=label2id
-    )
+    model = RobertaForSequenceClassification.from_pretrained(CHECKPOINT, num_labels=2)
     assert isinstance(model, RobertaForSequenceClassification)
 
     tokenizer = RobertaTokenizer.from_pretrained(CHECKPOINT)

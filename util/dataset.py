@@ -1,5 +1,5 @@
 import logging
-from typing import NamedTuple
+from typing import Any, NamedTuple
 from datasets import load_dataset, DatasetDict, Dataset
 
 
@@ -22,3 +22,12 @@ def load_sst2():
     assert isinstance(test, Dataset)
 
     return Sst2Dataset(train=train, validation=validation, test=test)
+
+
+class DataRow(NamedTuple):
+    sentence: str
+    label: int
+
+    @classmethod
+    def from_dict(cls, d: dict[str, Any]):
+        return cls(sentence=d["sentence"], label=d["label"])
