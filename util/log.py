@@ -23,3 +23,8 @@ def init_logging():
         logging.info("")
         logging.info("")
     logging.info("<Start>")
+
+
+def print_info(msg: str):
+    print(f"[INFO] {msg}")
+    logging.info(msg)
