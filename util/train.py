@@ -1,10 +1,10 @@
-import logging
 from typing import Any
 from peft.peft_model import PeftModel
 from torch import Tensor
 from transformers import TrainingArguments, Trainer, DataCollatorWithPadding
 from util.dataset import DataRow, Sst2Dataset
-from util.model import CHECKPOINT, Roberta
+from util.model import Roberta
+from util.log import print_info
 
 
 def train(peft: PeftModel, roberta: Roberta, dataset: Sst2Dataset):
@@ -15,11 +15,12 @@ def train(peft: PeftModel, roberta: Roberta, dataset: Sst2Dataset):
     def dataset_map_fn(example: dict[Any, Any]):
         row = DataRow.from_dict(example)
         token = roberta.tokenize(row.sentence)
-        return {"sentence": token, "label": row.label}
+        token = [int(t) for t in token]
+        return {"input_ids": token, "label": row.label}
 
     train = dataset.train.map(dataset_map_fn)
     validation = dataset.validation.map(dataset_map_fn)
-    logging.info("Converted to tokenized dataset")
+    print_info("Tokenization finished.")
 
     data_collator = DataCollatorWithPadding(tokenizer=roberta.tokenizer)
 

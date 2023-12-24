@@ -1,4 +1,4 @@
-from typing import NamedTuple
+from typing import Any, NamedTuple
 import logging
 from transformers import RobertaForSequenceClassification, RobertaTokenizer
 from transformers.modeling_outputs import SequenceClassifierOutput
@@ -13,13 +13,13 @@ class Roberta(NamedTuple):
     model: RobertaForSequenceClassification
     tokenizer: RobertaTokenizer
 
-    def tokenize(self, sentence: str):
-        return self.tokenizer.encode(
-            sentence, return_tensors="pt", truncation=True, max_length=512
-        )
+    def tokenize(self, sentence: str) -> Any:
+        return self.tokenizer.encode(sentence, truncation=True, max_length=512)
 
     def predict(self, sentence: str):
-        token = self.tokenize(sentence)
+        token = self.tokenizer.encode(
+            sentence, return_tensors="pt", truncation=True, max_length=512
+        )
         output = self.model(token)
         assert isinstance(output, SequenceClassifierOutput)
         output_label = int(output.logits.argmax().item())

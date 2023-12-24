@@ -1,5 +1,4 @@
 from tqdm import tqdm
-from transformers.modeling_outputs import SequenceClassifierOutput
 from util.dataset import DataRow, load_sst2
 from util.log import init_logging, print_info
 from util.model import get_peft, load_roberta
