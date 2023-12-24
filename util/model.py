@@ -18,10 +18,11 @@ def load_roberta():
     model = RobertaForSequenceClassification.from_pretrained(
         CHECKPOINT, num_labels=2, id2label=id2label, label2id=label2id
     )
-    logging.info(model)
     assert isinstance(model, RobertaForSequenceClassification)
+
     tokenizer = RobertaTokenizer.from_pretrained(CHECKPOINT)
-    if tokenizer.pad_token is None:
-        tokenizer.add_special_tokens({"pad_token": "<pad>"})
-        model.resize_token_embeddings(len(tokenizer))
+    assert isinstance(tokenizer, RobertaTokenizer)
+
+    logging.info(model)
+    logging.info(tokenizer)
     return RobertaModule(model=model, tokenizer=tokenizer)
